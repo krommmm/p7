@@ -5,6 +5,11 @@ import varGlobal from "../varGlobal";
 export default function Comments(props) {
   const [comment, setComment] = useState([]); //state qui reçoit le commentaire
 
+
+  //Création d'un nom unique aléatoire pour chaque les labels des textarea
+  const uuid = () => Math.random().toString(36).slice(-6);
+  const id = uuid();
+
   //Définition du moment où l'utilisateur poste un commentaire
   var time = new Date();
   time =
@@ -53,7 +58,11 @@ export default function Comments(props) {
       .catch((e) => {
         console.log(e);
       });
+
+
+   
   }
+
  
   return (
     <>
@@ -61,11 +70,11 @@ export default function Comments(props) {
   
 
 
-        <label htmlFor="commentaires-input">Commentaires:</label>
+        <label htmlFor={id}>Commentaires:</label>
         <br/>
         <textarea
           name="commentairess"
-          id="commentaires-input"
+          id={id}
           placeholder="Un commentaire ?"
           onChange={(e) => setComment(e.target.value)}
         /> 
