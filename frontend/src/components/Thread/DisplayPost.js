@@ -4,7 +4,6 @@ import Comments from "../Thread/Comments";
 import Likes from "../Thread/Likes";
 import varGlobal from "../varGlobal";
 export default function DisplayPost() {
-
   const [list, setList] = useState([]); //Contient tous les posts
   const [users, setUsers] = useState([]); //Contient tous les utilisateurs
   const [objet, setObjet] = useState([]); // Contient les posts et les utilisateurs
@@ -22,7 +21,6 @@ export default function DisplayPost() {
       for (var b = 0; b < list.length; b++) {
         //Si l'id de l'utilisateur correspond à l'id du post
         if (users[a]._id === list[b].posterId) {
-          
           //Est-ce que le post contient une image ?
           if (list[b].imageUrl !== undefined) {
             var isImage = true;
@@ -57,7 +55,7 @@ export default function DisplayPost() {
           if (list[b].imageUrl == "undefined") {
             list[b].imageUrl = "";
           }
-           //Transmition de list à objet après les conditions
+          //Transmition de list à objet après les conditions
           setObjet([...list]);
         }
       }
@@ -66,7 +64,7 @@ export default function DisplayPost() {
 
   //----------------Récupération des utilisateurs------------------
   const fetchUsers = async () => {
-   //Récupération du token pour l'identification
+    //Récupération du token pour l'identification
     var identifiant = sessionStorage.getItem("state");
     var identifiantObjet = JSON.parse(identifiant);
 
@@ -74,9 +72,9 @@ export default function DisplayPost() {
       const result = await fetch(`${varGlobal}/api/auth`, {
         method: "GET",
         headers: {
-          "Accept": "application/json",
+          Accept: "application/json",
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${identifiantObjet.token}`,
+          Authorization: `Bearer ${identifiantObjet.token}`,
         },
       });
       const body = await result.json();
@@ -96,9 +94,9 @@ export default function DisplayPost() {
       const result = await fetch(`${varGlobal}/api/posts`, {
         method: "GET",
         headers: {
-          "Accept": "application/json",
+          Accept: "application/json",
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${identifiantObjet.token}`,
+          Authorization: `Bearer ${identifiantObjet.token}`,
         },
       });
       const body = await result.json();
@@ -127,7 +125,7 @@ export default function DisplayPost() {
 
   return (
     <>
-    {/*Mappage antéchronologique du state objet */}
+      {/*Mappage antéchronologique du state objet */}
       <div className="display-post">
         {objet
           .slice(0)
@@ -139,7 +137,8 @@ export default function DisplayPost() {
                   <div className="profil_post">
                     <p>
                       <img
-                        className="image-profil" alt="image de profil"
+                        className="image-profil"
+                        alt={todo.name + todo.firstName}
                         src={varGlobal + "/images/" + todo.imageProfil}
                       />
 
@@ -173,7 +172,6 @@ export default function DisplayPost() {
                   <Likes myUserValues={todo} />
 
                   <div className="modify">
-                  
                     <div
                       type="button"
                       onClick={(e) => handleSoloPost(todo._id, todo.posterId)}
@@ -219,7 +217,7 @@ export default function DisplayPost() {
                       <div className="ligne-séparation"></div>
                     </div>
                   ))}
-                   {/*Envoie du state objet à son enfant comments en prop */}
+                {/*Envoie du state objet à son enfant comments en prop */}
                 <Comments myUserValues={todo} />
                 <br />
                 <br />
