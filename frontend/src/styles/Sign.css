@@ -45,13 +45,22 @@
 
 /* Login*/
 .password-error,
-.email-error {
+.email-error,.maj-error,.min-error,.nb-error,.charSpecial-error {
     color: red;
     display:none;
     max-width: 200px;
     margin-bottom: 10px;
 }
 
+/*Div qui entoure les div d'erreurs*/
+.errors{
+    display:flex;
+    flex-direction: column;
+}
+.errors div{
+    margin:0px; 
+    padding:0px;
+}
 
 /*Signup*/
 .sign-container {
