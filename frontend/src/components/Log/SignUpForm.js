@@ -14,11 +14,16 @@ const SignUpForm = () => {
   var answerPassword = document.querySelector(".password-error");
   var answerPrénom = document.querySelector(".prénom-error");
   var answerNom = document.querySelector(".nom-error");
+  var answerMaj = document.querySelector(".maj-error");
+  var answerMin = document.querySelector(".min-error");
+  var answerNb = document.querySelector(".nb-error");
+  var answerSpecial = document.querySelector(".charSpecial-error");
+
   var isTaken = false; // Si un utilisateur a la même email que le mail de l'inscription
 
   //Récupération des utilisateurs
   useEffect(() => {
-    fetch(`${varGlobal}/api/auth/`, {
+    fetch(`${varGlobal}/api/auth/`, { 
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -50,9 +55,19 @@ const SignUpForm = () => {
       password == "" ||
       prénom == "" ||
       nom == "" ||
+      answerMaj == "" ||
+      answerMin == "" ||
+      answerNb == "" ||
+      answerSpecial == "" ||
       answer.style.display == "flex" ||
       answerEmail.style.display == "flex" ||
       answerPassword.style.display == "flex" ||
+
+      answerMaj.style.display == "flex" ||
+      answerMin.style.display == "flex" ||
+      answerNb.style.display == "flex" ||
+      answerSpecial.style.display == "flex" ||
+
       answerPrénom.style.display == "flex" ||
       answerNom.style.display == "flex"
     ) {
@@ -115,17 +130,65 @@ const SignUpForm = () => {
       document.querySelector(".email-error").style.display = "flex";
     }
   }
-
+  
   function regexPassword(e) {
     setPassword(e.target.value);
-    //minimum: 10 charactères, 1 majuscule, 1 minuscule, 1 chiffre
     let testPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{12,}$/;
+    let testMajuscule= /[A-Z]/;
+    let testMinuscule = /[a-z]/;
+    let testChiffre = /[0-9]/;
+    let testCharSpecial = /[\^>$*<%+=@!,;:?.]/;
+    let test12Char = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=^.{12,}$)/;
+    //Si problème avec espace /[\S]/ ou \S
+
+    if (testMajuscule.test(e.target.value) || e.target.value == "") {
+      document.querySelector(".maj-error").style.display = "none";
+      document.querySelector(".answer-input").innerHTML = "";
+    } else {
+      document.querySelector(".maj-error").style.display = "flex";
+    }
+  
+
+    if (testMinuscule.test(e.target.value) || e.target.value == "") {
+      document.querySelector(".min-error").style.display = "none";
+      document.querySelector(".answer-input").innerHTML = "";
+    } else {
+      document.querySelector(".min-error").style.display = "flex";
+    }
+
+    if (testChiffre.test(e.target.value) || e.target.value == "") {
+      document.querySelector(".nb-error").style.display = "none";
+      document.querySelector(".answer-input").innerHTML = "";
+    } else {
+      document.querySelector(".nb-error").style.display = "flex";
+    }
+
+    if (testCharSpecial.test(e.target.value) || e.target.value == "") {
+      document.querySelector(".charSpecial-error").style.display = "none";
+      document.querySelector(".answer-input").innerHTML = "";
+    } else {
+      document.querySelector(".charSpecial-error").style.display = "flex";
+    }
+
+    if (test12Char.test(e.target.value) || e.target.value == "") {
+      document.querySelector(".password-error").style.display = "none";
+      document.querySelector(".answer-input").innerHTML = "";
+    } else {
+      document.querySelector(".password-error").style.display = "flex";
+    }
+
+   /*
     if (testPassword.test(e.target.value) || e.target.value == "") {
       document.querySelector(".password-error").style.display = "none";
       document.querySelector(".answer-input").innerHTML = "";
     } else {
       document.querySelector(".password-error").style.display = "flex";
     }
+
+    */
+
+
+
   }
 
   function regexName(e) {
@@ -181,16 +244,14 @@ const SignUpForm = () => {
             placeholder="enter password"
             onChange={(e) => regexPassword(e)}
           />
-          <div className="password-error">
-            Minimum:
-            <br /> 12 caractères
-            <br />
-            (hors charactères spéciaux),
-            <br /> 1 majuscule,
-            <br /> 1 minuscule,
-            <br /> 1 chiffre
-          </div>
-          <br />
+          <div className="errors">
+          <div className="password-error">minimum: 12 caractères  {/*(hors charactères spéciaux)*/}</div>
+            <div className="maj-error">1 majuscule</div>
+            <div className="min-error"><br/>1 minuscule</div>
+            <div className="nb-error">1 chiffre</div>
+            <div className="charSpecial-error">1 charactère spécial</div>
+            </div>
+            
           <label htmlFor="prénom">Prénom</label>
           <br />
           <input
