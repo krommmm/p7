@@ -101,11 +101,11 @@ export default function OneComment() {
     <>
       <div className="oneComment-container">
         <div className="display-container">
-          <p>
+         
             {" "}
             <h1>Commentaire de {user.name}{" "}
             {user.firstName}</h1>
-          </p>
+          
 
           <p>{textCom}</p>
 
