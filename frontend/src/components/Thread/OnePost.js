@@ -112,10 +112,10 @@ export default function OnePost() {
       <div className="OnePost_container">
         <div className="display-container">
           <div className="head-container">
-            <p>
+           
               <h1><span className="en-gras">Publié par</span> {user.name}{" "}
               {user.firstName}</h1>
-            </p>
+            
 
             {list.date}
           </div>
